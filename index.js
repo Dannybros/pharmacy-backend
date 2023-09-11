@@ -2,15 +2,15 @@ import express from "express";
 import cors from 'cors';
 import mongoose from "mongoose";
 import dotenv from 'dotenv';
-import items from './route/Items.js'
-import users from './route/Users.js'
-import employee from './route/Employee.js'
-import category from './route/Category.js'
-import supplier from './route/Supplier.js'
-import order from './route/Order.js'
-import imports from './route/Import.js'
-import review from './route/Review.js'
-import stripe from './route/Stripe.js'
+// import items from './route/Items.js'
+// import users from './route/Users.js'
+// import employee from './route/Employee.js'
+// import category from './route/Category.js'
+// import supplier from './route/Supplier.js'
+// import order from './route/Order.js'
+// import imports from './route/Import.js'
+// import review from './route/Review.js'
+// import stripe from './route/Stripe.js'
 import {Server} from 'socket.io'
 
 dotenv.config();
@@ -37,15 +37,15 @@ app.use((req, res, next) => {
     return next();
 });
 
-app.use('/products', items);
-app.use('/user', users);
-app.use('/employee', employee);
-app.use('/category', category)
-app.use('/supplier', supplier)
-app.use('/order', order)
-app.use('/review', review)
-app.use('/imports', imports)
-app.use('/stripe', stripe)
+// app.use('/products', items);
+// app.use('/user', users);
+// app.use('/employee', employee);
+// app.use('/category', category)
+// app.use('/supplier', supplier)
+// app.use('/order', order)
+// app.use('/review', review)
+// app.use('/imports', imports)
+// app.use('/stripe', stripe)
 
 app.get('/', (req, res)=> {
     res.status(200).send("Hello World");
