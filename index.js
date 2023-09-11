@@ -7,10 +7,10 @@ import items from './route/Items.js'
 // import employee from './route/Employee.js'
 // import category from './route/Category.js'
 // import supplier from './route/Supplier.js'
-// import order from './route/Order.js'
-// import imports from './route/Import.js'
-// import review from './route/Review.js'
-// import stripe from './route/Stripe.js'
+import order from './route/Order.js'
+import imports from './route/Import.js'
+import review from './route/Review.js'
+import stripe from './route/Stripe.js'
 import {Server} from 'socket.io'
 
 dotenv.config();
@@ -42,10 +42,10 @@ app.use('/products', items);
 // app.use('/employee', employee);
 // app.use('/category', category)
 // app.use('/supplier', supplier)
-// app.use('/order', order)
-// app.use('/review', review)
-// app.use('/imports', imports)
-// app.use('/stripe', stripe)
+app.use('/order', order)
+app.use('/review', review)
+app.use('/imports', imports)
+app.use('/stripe', stripe)
 
 app.get('/', (req, res)=> {
     res.status(200).send("Hello World");
