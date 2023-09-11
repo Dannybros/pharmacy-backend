@@ -3,8 +3,8 @@ import cors from 'cors';
 import mongoose from "mongoose";
 import dotenv from 'dotenv';
 import items from './route/Items.js'
-// import users from './route/Users.js'
-// import employee from './route/Employee.js'
+import users from './route/Users.js'
+import employee from './route/Employee.js'
 import category from './route/Category.js'
 import supplier from './route/Supplier.js'
 import order from './route/Order.js'
