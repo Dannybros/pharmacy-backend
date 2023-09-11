@@ -38,8 +38,8 @@ app.use((req, res, next) => {
 });
 
 app.use('/products', items);
-// app.use('/user', users)
-// app.use('/employee', employee)
+app.use('/user', users)
+app.use('/employee', employee)
 app.use('/category', category)
 app.use('/supplier', supplier)
 app.use('/order', order)
