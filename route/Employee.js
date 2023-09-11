@@ -1,6 +1,6 @@
 import express from 'express'
 import EmployeeCollection from '../model/EmployeeModel.js';
-import AdminsCollection from '../model/adminsModel.js';
+import AdminCollection from '../model/AdminModel.js';
 import bcrypt from 'bcryptjs';
 import mongoose from 'mongoose';
 
@@ -19,7 +19,7 @@ router.get('/', (req, res)=>{
 router.post('/delete', async(req,res)=>{
     const {id} = req.body;
 
-    await AdminsCollection.findOneAndRemove({adminID:id});
+    await AdminCollection.findOneAndRemove({adminID:id});
 
     EmployeeCollection.find({_id: id}, (err, data)=>{
         if(err){
@@ -42,7 +42,7 @@ router.post('/update', async(req,res)=>{
         });
     }
 
-    await AdminsCollection.findOneAndUpdate({adminID:_id}, {
+    await AdminCollection.findOneAndUpdate({adminID:_id}, {
         username:EmployeeName,
         password: await bcrypt.hash(EmployeeName, 10),
     })
@@ -75,7 +75,7 @@ router.post('/', async(req, res)=>{
 
     const newEmpID = mongoose.Types.ObjectId();
 
-    await new AdminsCollection({
+    await new AdminCollection({
         username:EmployeeName,
         password: await bcrypt.hash(EmployeeName, 10),
         adminID:newEmpID,

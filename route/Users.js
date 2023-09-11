@@ -1,6 +1,6 @@
 import express from 'express'
 import UserCollection from '../model/UserModel.js';
-import AdminsCollection from '../model/adminsModel.js';
+import AdminCollection from '../model/AdminModel.js';
 import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
@@ -43,7 +43,7 @@ router.get('/home', async(req, res)=>{
 router.post('/admin/login', async(req, res)=>{
     const {username, password} = req.body;
 
-    const existingUser = await AdminsCollection.findOne({username: username});
+    const existingUser = await AdminCollection.findOne({username: username});
 
     if(!existingUser) return res.status(403).json({status:"error", message:"Username or Password is incorrect"})
     
