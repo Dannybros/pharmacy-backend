@@ -2,7 +2,7 @@ import express from "express";
 import cors from 'cors';
 import mongoose from "mongoose";
 import dotenv from 'dotenv';
-// import items from './route/Items.js'
+import items from './route/Items.js'
 // import users from './route/Users.js'
 // import employee from './route/Employee.js'
 // import category from './route/Category.js'
@@ -37,7 +37,7 @@ app.use((req, res, next) => {
     return next();
 });
 
-// app.use('/products', items);
+app.use('/products', items);
 // app.use('/user', users);
 // app.use('/employee', employee);
 // app.use('/category', category)
