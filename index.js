@@ -3,7 +3,7 @@ import cors from 'cors';
 import mongoose from "mongoose";
 import dotenv from 'dotenv';
 import items from './route/Items.js'
-import users from './route/Users.js'
+// import users from './route/Users.js'
 import employee from './route/Employee.js'
 import category from './route/Category.js'
 import supplier from './route/Supplier.js'
@@ -38,14 +38,14 @@ app.use((req, res, next) => {
 });
 
 app.use('/products', items);
-app.use('/user', users)
-app.use('/employee', employee)
-app.use('/category', category)
-app.use('/supplier', supplier)
-app.use('/order', order)
-app.use('/review', review)
-app.use('/imports', imports)
-app.use('/stripe', stripe)
+// app.use('/user', users)
+app.use('/employee', employee);
+app.use('/category', category);
+app.use('/supplier', supplier);
+app.use('/order', order);
+app.use('/review', review);
+app.use('/imports', imports);
+app.use('/stripe', stripe);
 
 app.get('/', (req, res)=> {
     res.status(200).send("Hello World");
