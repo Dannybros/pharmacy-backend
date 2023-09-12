@@ -33,7 +33,7 @@ app.use(cors());
 
 const io = new Server(server, {
     cors: {
-      origin: "*:*"
+      origin: "https://pharmacy-client.netlify.app"
     },
 });
 
