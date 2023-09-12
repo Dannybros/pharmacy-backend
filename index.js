@@ -31,11 +31,17 @@ mongoose.connection.on("connected", ()=>{
 
 app.use(cors());
 
+const io = new Server(server, {
+    cors: {
+      origin: "*:*"
+    },
+});
+
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb', extended: true, parameterLimit:50000}));
 
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
+    res.setHeader('Access-Control-Allow-Origin', '*');
     req.io = io;
     return next();
 });
@@ -55,12 +61,6 @@ app.get('/', (req, res)=> {
 });
 
 server.listen(port, ()=>console.log(`App is starting now in ${port}`));
-
-const io = new Server(server, {
-    cors: {
-      origin: "*"
-    },
-});
 
 global.onlineUsers = new Map();
 
