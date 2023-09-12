@@ -1,5 +1,6 @@
 import express from "express";
 import cors from 'cors';
+import {createServer} from 'http';
 import mongoose from "mongoose";
 import dotenv from 'dotenv';
 import items from './route/Items.js'
@@ -16,6 +17,7 @@ import {Server} from 'socket.io'
 dotenv.config();
 
 const app = express();
+const server = createServer(app);
 const port = process.env.PORT || 5000;
 
 mongoose.connect(process.env.MONGODB_URI,{
@@ -51,12 +53,13 @@ app.get('/', (req, res)=> {
     res.status(200).send("Hello World");
 });
 
-const server = app.listen(port, ()=>console.log(`App is starting now in ${port}`));
+server.listen(port, ()=>console.log(`App is starting now in ${port}`));
 
 const io = new Server(server, {
     cors: {
       origins: ["*:*"],
       methods:["GET", "POST"],
+      credentials: true,
     },
 });
 
