@@ -55,7 +55,7 @@ const server = app.listen(port, ()=>console.log(`App is starting now in ${port}`
 
 const io = new Server(server, {
     cors: {
-      origin: "https://pharmacy-client.netlify.app",
+      origins: ["*:*"],
       methods:["GET", "POST"],
     },
 });
