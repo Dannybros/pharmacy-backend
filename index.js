@@ -35,6 +35,7 @@ app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb', extended: true, parameterLimit:50000}));
 
 app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
     req.io = io;
     return next();
 });
@@ -50,16 +51,14 @@ app.use('/imports', imports);
 app.use('/stripe', stripe);
 
 app.get('/', (req, res)=> {
-    res.status(200).send("Hello World");
+    res.status(200).send("testing cors 1.6");
 });
 
 server.listen(port, ()=>console.log(`App is starting now in ${port}`));
 
 const io = new Server(server, {
     cors: {
-      origins: ["https://pharmacy-client.netlify.app"],
-      methods:["GET", "POST"],
-      credentials: true,
+      origin: "*"
     },
 });
 
