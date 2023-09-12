@@ -57,9 +57,9 @@ server.listen(port, ()=>console.log(`App is starting now in ${port}`));
 
 const io = new Server(server, {
     cors: {
-      origins: ["*:*"],
+      origins: ["https://pharmacy-client.netlify.app"],
       methods:["GET", "POST"],
-      credentials: false,
+      credentials: true,
     },
 });
 
@@ -73,4 +73,6 @@ io.on('connection', (socket)=>{
         console.log(onlineUsers);
         socket.emit("Test", {message:"Hello"})
     })
+
+    console.log(socket.id);
 })
