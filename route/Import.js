@@ -57,9 +57,7 @@ router.post('/check', async(req, res)=>{
         if(err){
             res.status(500).json({error:err});
         }else{
-            res.status(200).json({message:"import checked successfully"});
-            req.io.emit("import-update",{data:data});
-            req.io.emit("update-product", {data:data})
+            res.status(200).json({message:"import checked successfully", data:data});
         }
     })
 })
@@ -72,9 +70,7 @@ router.post('/cancel', (req, res)=>{
         if(err){
             res.status(500).json({error:err});
         }else{
-            res.status(200).json({message:"import cancelled successfully"});
-            req.io.emit("import-update",{data:data});
-            req.io.emit("update-product", {data:data})
+            res.status(200).json({message:"import cancelled successfully", data:data});
         }
     })
 })
@@ -82,9 +78,7 @@ router.post('/cancel', (req, res)=>{
 router.post('/', async(req, res)=>{
 
     const {supp, items, subtotal} = req.body;
-
-
-
+    
     new ImportCollection({
         supplierName:supp,
         importItems:items,
@@ -92,10 +86,10 @@ router.post('/', async(req, res)=>{
     }).save()
     .then(result=>{
         res.status(201).json({
-            message:"New Import Ordered Successfully"
+            message:"New Import Ordered Successfully",
+            data:result
         })
         
-        req.io.emit("new-import",{data:result});
     })
     .catch(err=>{
         res.status(500).json({

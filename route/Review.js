@@ -8,7 +8,7 @@ router.post("/get/all-review", async(req, res)=>{
 
     const existingReview = await ReviewCollection.findOne({reviewTo:reviewTo})
 
-    if(!existingReview) return res.status(400).json({message: "There is no review on this yet"});
+    if(!existingReview) return res.status(404).json({message: "There is no review on this yet"});
 
     res.status(200).json({data:existingReview.reviews})
 })
@@ -19,11 +19,11 @@ router.post('/get/one', async(req, res)=>{
 
     const existingReview = await ReviewCollection.findOne({reviewTo:reviewTo})
 
-    if(!existingReview) return res.status(400).json({message: "There is no review on this yet"});
+    if(!existingReview) return res.status(404).json({message: "There is no review on this yet"});
 
     const existingUserReview = existingReview.reviews.find(x => x._id === userId);
 
-    if(!existingUserReview)  return res.status(400).json({message: "There is no review"});
+    if(!existingUserReview)  return res.status(404).json({message: "There is no review"});
     
     res.status(201).json({message:"successfully retrieved a review", data:existingUserReview});
 })

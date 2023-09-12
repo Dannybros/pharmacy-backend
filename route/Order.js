@@ -60,48 +60,38 @@ router.post('/user', (req, res)=>{
     })
 })
 
-router.post('/checked', (req, res)=>{
+router.post('/seen', (req, res)=>{
     const {_id} = req.body;
 
     OrderCollection.findByIdAndUpdate(_id, {checked:true}, ({new:true}), (err, data)=>{
         if(err){
-            res.status(500).json({
-                error:err
-            });
+            res.status(500).json({message:"Updated Failed. Please Try Again"})
         }else{
-            req.io.emit("update_order", {data:data});
+            res.status(201).json({message:"Order Items Received", data:data})
         }
     })
 })
 
 router.post('/start_delivery', (req, res)=>{
-    const {_id, customerID, empName} = req.body;
+    const {_id, empName} = req.body;
 
     OrderCollection.findByIdAndUpdate(_id, {employeeName:empName, status:{en:"On Delivery", la:"ກໍາລັງຈັດສົ່ງ"}}, ({new:true}), (err, data)=>{
         if(err){
-            res.status(500).json({
-                error:err
-            });
+            res.status(500).json({message:"Updated Failed. Please Try Again"})
         }else{
-            req.io.emit("order_start_end", {data:data, message:`Start Delivery ID ${_id} by ${empName}`});
-            const clientSocket = onlineUsers.get(customerID);
-            req.io.to(clientSocket).emit("order_update", {data:data})
+            res.status(201).json({message:"Delivery Started", data:data})
         }
     })
 })
 
 router.post('/complete_order', (req, res)=>{
-    const {_id, customerID} = req.body;
+    const {_id} = req.body;
 
     OrderCollection.findByIdAndUpdate(_id, {status:{en:"Completed", la:"ສໍາເລັດການສັ່ງ"}}, ({new:true}), (err, data)=>{
         if(err){
-            res.status(500).json({
-                error:err
-            });
+            res.status(500).json({message:"Updated Failed. Please Try Again"})
         }else{
-            req.io.emit("order_start_end", {data:data, message:`Order ID ${_id} completed`});
-            const clientSocket = onlineUsers.get(customerID);
-            req.io.to(clientSocket).emit("order_update", {data:data})
+            res.status(201).json({message:"Delivery Completed", data:data})
         }
     })
 })
@@ -123,13 +113,9 @@ router.post('/cancelled', async(req, res)=>{
 
     OrderCollection.findByIdAndUpdate({_id:order._id}, {status:{en:"Cancelled", la:"ການສັ່ງຍົກເລີກ"}}, ({new:true}), (err, data)=>{
         if(err){
-            res.status(500).json({
-                error:err
-            });
+            res.status(500).json({message:"Updated Failed. Please Try Again"})
         }else{
-            req.io.emit("order_start_end", {data:data, message:`Order Cancelled`});
-            const clientSocket = onlineUsers.get(order.customerID);
-            req.io.to(clientSocket).emit("order_update", {data:data})
+            res.status(201).json({message:"Delivery Cancelled", data:data})
         }
     })
 })
@@ -167,10 +153,9 @@ router.post('/', async(req, res)=>{
     }).save()
     .then(result=>{
         res.status(201).json({
-            message:"New Order registered successfully"
+            message:"New Order registered successfully",
+            data:result
         })
-        
-        req.io.emit("new-order",{data:result});
     })
     .catch(err=>{
         res.status(500).json({

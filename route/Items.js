@@ -31,7 +31,6 @@ router.post('/delete', (req,res)=>{
             res.status(500).json({error:err});
         }else{
             res.status(201).send({message:"Deleted Successfully"});
-            req.io.emit("delete-product", {id:id});
         }
     }).deleteOne();
 })
@@ -60,7 +59,6 @@ router.post('/update', (req,res)=>{
                 res.status(500).json({message:"Updated Failed. Please Try Again"})
             }else{
                 res.status(201).json({message:"Updated Success", data:data})
-                req.io.emit("update-product", {data:data});
             }
         })
     }
@@ -87,7 +85,6 @@ router.post('/', async(req, res)=>{
             img:imgUrl
         }).save()
         .then(result=>{
-            req.io.emit("new-products",{data:result});
 
             res.status(201).json({
                 message:"New Medicine registered successfully",
